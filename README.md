@@ -1,42 +1,34 @@
-# PointUtility
+# AISrecord
  
-This script adds functionality for adding marks to OpenCPN.  When the script is run, it parks itself out of the way and you have the following functionality.
+This script monitors AIS targets and records their movements into individual files for each target.
+These files can be replayed using the VDR plugin.
 
-## _Copy position_ context menu
+The script starts with various options, which can be set as required
+````
+const frequency = 30;	// how often to look at AIS targets (seconds)
+const range = 5.0;	// only record targets within this distance (nm)  (0 for all)
+const minDistance = 0.001;	// distance in nm to have moved before new record
+const ghost = 30;	// time in seconds before ghost target removed
+const adviseTime = 5; // seconds to display notifications.  Set to 0 to suppress
+````
 
-The _Copy position_ context menu copies the cursor position to your clipboard formatted ready for pasting into logs or reports.
-
-## _Copy mark_ context menu
-
-This copies a nearby waypoint to become the template for pasted marks.  You can click on the mark itself - at present this context menu will be in the _Main menu_ subsection.
-
-Choose a mark with the desired icon, _Show at scale_  option and other attributes.
-
-The copied mark becomes the pro forma style for pasted marks.
-
-## _Paste mark_ context menu
-
-Proposes to paste a mark at the chosen location using a previously copied mark as the style template.
-
-When a mark is pasted, the chart is centred on it and will be zoomed in. if necessary, so that the mark is displayed.
-
-This context menu is only available if you have previously copied a mark to be a template.
-
-## _Paste mark from clipboard_ context menu
-
-You can paste a mark at a position from some other source, such as a cruising guide.
-
-Copy a position such as  _56° 48.190'N 010° 26.637'E_ to your clipboard and then select _Paste mark from clipboard_ in the context menu.  The script will propose to paste a mark at the location, the canvas centred there and the chart zoomed in if required so that the mark is displayed.
-
-If there is text no longer than 15 characters before the position (e.g. _Sandy Bay 56° 48.190'N 010° 26.637'E_) this will be proposed as the mark name.
-
-This context menu is only available if you have previously copied a mark to be a template.
+The `minDistance` setting prevents multiple records when a target is not moving.
+A small value allows for a ship swinging at anchor.
 
 ## Installing the script
 
-This script needs JavaScript plugin v3 or later.
+This script needs JavaScript plugin v3.0.6 or later.
 
-1. Copy this URL to your clipboard (copy link - do not follow it) `https://raw.githubusercontent.com/antipole2/PointUtility/main/pointUtility.js`
+It created one file for each MMSI seen.
+These files are creted in the plugin's _Current directory_.
+You should create an empty directory and then set it as the Current directory in the Directory tab of the plugin Tools.
+
+The script appends data to any existing file, so you can run the script at different times and accumulate a log.
+To clear a log, delete the file.
+
+To install the script:
+
+1. Copy this URL to your clipboard (copy link - do not follow it) `https://raw.githubusercontent.com/antipole2/AISrecord/main/AISrecord.js`
 2. In a JavaScript console choose `Load` and then `URL on clipboard`.  The script should be loaded into the script pane.
 3. Choose `Run` to start the script.
 
