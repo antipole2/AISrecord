@@ -19,7 +19,16 @@ A small value allows for a ship swinging at anchor.
 
 This script needs JavaScript plugin v3.0.6 or later.
 
-1. Copy this URL to your clipboard (copy link - do not follow it) `https://raw.githubusercontent.com/antipole2/PointUtility/main/pointUtility.js`
+It created one file for each MMSI seen.
+These files are creted in the plugin's _Current directory_.
+You should create an empty directory and then set it as the Current directory in the Directory tab of the plugin Tools.
+
+The script appends data to any existing file, so you can run the script at different times and accumulate a log.
+To clear a log, delete the file.
+
+To install the script:
+
+1. Copy this URL to your clipboard (copy link - do not follow it) `https://raw.githubusercontent.com/antipole2/AISrecord/main/AISrecord.js`
 2. In a JavaScript console choose `Load` and then `URL on clipboard`.  The script should be loaded into the script pane.
 3. Choose `Run` to start the script.
 
