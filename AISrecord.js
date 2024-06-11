@@ -9,8 +9,16 @@ const adviseTime = 5; // seconds to display notifications.  Set to 0 to supress
 scriptName = "AISrecord";
 scriptVersion = 0.1;
 
+// need plugin v3.0.6 or later
+	{
+	v = OCPNgetPluginConfig();
+	version = v.PluginVersionMajor + (v.PluginVersionMinor/10);
+	if ((version < 3) || (version == 3) && (v.patch < 6)) throw(scriptName + " requires plugin v3.0.6 or later.");
+	}
+consoleName(scriptName);
 sender = "JS";	//NMEA sender to use
 trace = false;
+checkForUpdates();
 
 targets = {};	// will be targets we are tracking
 
@@ -19,6 +27,7 @@ Position = require("Position");
 
 onAllSeconds(look, frequency);
 onAllSeconds(pruneGhosts, 30);
+consolePark();
 
 function look(){
 	thisMoment = new Date;
@@ -92,4 +101,15 @@ function advise(text){
 
 function clearAdvise(){
 	alert(false);
+	}
+
+function checkForUpdates(){
+	if (!OCPNisOnline()) return;
+	choice = messageBox("Are you truely on-line to the internet?", "YesNo", "checkVersion");
+	if (choice == 3) return;
+	check = require("https://raw.githubusercontent.com/antipole2/JavaScript_pi/master/onlineIncludes/checkForUpdates.js");
+	check(scriptVersion, days = 5,
+		"https://raw.githubusercontent.com/antipole2/AISrecord/main/AISrecord.js",	// url of script
+		"https://raw.githubusercontent.com/antipole2/AISrecord/main/version.JSON"// url of version JSON
+		);
 	}
