@@ -19,9 +19,9 @@ A small value allows for a ship swinging at anchor.
 
 This script needs JavaScript plugin v3.0.6 or later.
 
-It created one file for each MMSI seen.
-These files are creted in the plugin's _Current directory_.
-You should create an empty directory and then set it as the Current directory in the Directory tab of the plugin Tools.
+It creates one file for each MMSI seen.
+These files are created in the plugin's _Current directory_.
+You should create an empty directory and then set it as the Current directory in the Directory tab of the plugin's Tools.
 
 The script appends data to any existing file, so you can run the script at different times and accumulate a log.
 To clear a log, delete the file.
