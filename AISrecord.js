@@ -105,10 +105,27 @@ function clearAdvise(){
 
 function checkForUpdates(){
 	if (!OCPNisOnline()) return;
+	now = new Date().getTime();
+	checkDays = 5;	// how often to check
+	if (_remember.hasOwnProperty("versionControl")){
+		if (trace) print("_remember: ", JSON.stringify(_remember), "\n");
+		lastCheck = _remember.versionControl.lastCheck;
+		nextCheck = lastCheck + checkDays*24*60*60*1000;
+		if (trace) print("now: ", now, "\tversionControl.lastCheck was ", lastCheck, "\tnext due ", nextCheck, "\n");
+		if (now < nextCheck){
+			_remember.versionControl.lastCheck = now;
+			return;
+			}
+		}
+	choice = messageBox("Are you truely on-line to the internet?", "YesNo", "checkVersion");
+	if (choice == 3){
+		_remember.versionControl.lastCheck = now;
+		return;
+		}
 	choice = messageBox("Are you truely on-line to the internet?", "YesNo", "checkVersion");
 	if (choice == 3) return;
 	check = require("https://raw.githubusercontent.com/antipole2/JavaScript_pi/master/onlineIncludes/checkForUpdates.js");
-	check(scriptVersion, days = 5,
+	check(scriptVersion, checkDays,
 		"https://raw.githubusercontent.com/antipole2/AISrecord/main/AISrecord.js",	// url of script
 		"https://raw.githubusercontent.com/antipole2/AISrecord/main/version.JSON"// url of version JSON
 		);
