@@ -1,6 +1,7 @@
 {	"name":"AISrecord",
 	"version":0.1,
 	"date":"11 Jun 2024",
+	"script": "https://raw.githubusercontent.com/antipole2/AISrecord/main/AISrecord.js",
 	"new":"",
 	"comment": "Don't forget to set same version number in the script too!"
 }
