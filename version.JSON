@@ -1,7 +1,8 @@
 {	"name":"AISrecord",
-	"version":0.1,
-	"date":"11 Jun 2024",
+	"version":0.2,
+	"date":"17 Feb 2025",
+	"pluginVersion": "3.1.1"",
 	"script": "https://raw.githubusercontent.com/antipole2/AISrecord/main/AISrecord.js",
-	"new":"",
+	"new":"Incorporates built-in update checking",
 	"comment": "Don't forget to set same version number in the script too!"
 }

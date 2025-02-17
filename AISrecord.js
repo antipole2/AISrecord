@@ -7,24 +7,21 @@ const ghost = 30;	// time in seconds before ghost target removed
 const adviseTime = 5; // seconds to display notifications.  Set to 0 to supress
 
 scriptName = "AISrecord";
-scriptVersion = 0.1;
+scriptVersion = 0.2;
 
-// need plugin v3.0.6 or later
-	{
-	v = OCPNgetPluginConfig();
-	version = v.PluginVersionMajor + (v.PluginVersionMinor/10);
-	if ((version < 3) || (version == 3) && (v.patch < 6)) throw(scriptName + " requires plugin v3.0.6 or later.");
-	}
+require("pluginVersion")("3.1.1");
 consoleName(scriptName);
+
+require("checkForUpdate")(scriptName,  scriptVersion, 5, "https://raw.githubusercontent.com/antipole2/AISrecord/main/version.JSON");
 sender = "JS";	//NMEA sender to use
 trace = false;
-checkForUpdates();
 
 targets = {};	// will be targets we are tracking
 
 File = require("File");
 Position = require("Position");
 
+onExit(report);
 onAllSeconds(look, frequency);
 onAllSeconds(pruneGhosts, 30);
 consolePark();
@@ -103,30 +100,8 @@ function clearAdvise(){
 	alert(false);
 	}
 
-function checkForUpdates(){
-	if (!OCPNisOnline()) return;
-	now = new Date().getTime();
-	checkDays = 5;	// how often to check
-	if (_remember.hasOwnProperty("versionControl")){
-		if (trace) print("_remember: ", JSON.stringify(_remember), "\n");
-		lastCheck = _remember.versionControl.lastCheck;
-		nextCheck = lastCheck + checkDays*24*60*60*1000;
-		if (trace) print("now: ", now, "\tversionControl.lastCheck was ", lastCheck, "\tnext due ", nextCheck, "\n");
-		if (now < nextCheck){
-			_remember.versionControl.lastCheck = now;
-			return;
-			}
-		}
-	choice = messageBox("Are you truely on-line to the internet?", "YesNo", "checkVersion");
-	if (choice == 3){
-		_remember.versionControl.lastCheck = now;
-		return;
-		}
-	choice = messageBox("Are you truely on-line to the internet?", "YesNo", "checkVersion");
-	if (choice == 3) return;
-	check = require("https://raw.githubusercontent.com/antipole2/JavaScript_pi/master/onlineIncludes/checkForUpdates.js");
-	check(scriptVersion, checkDays,
-		"https://raw.githubusercontent.com/antipole2/AISrecord/main/AISrecord.js",	// url of script
-		"https://raw.githubusercontent.com/antipole2/AISrecord/main/version.JSON"// url of version JSON
-		);
+function report(){
+	targetCount = Object.keys(targets).length;
+	if (targetCount > 0) scriptResult(targetCount, " target(s) seen and files written");
+	else scriptResult("No targets seen");
 	}

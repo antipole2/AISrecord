@@ -17,7 +17,7 @@ A small value allows for a ship swinging at anchor.
 
 ## Installing the script
 
-This script needs JavaScript plugin v3.0.6 or later.
+This script needs JavaScript plugin v3.1.1 or later.
 
 It creates one file for each MMSI seen.
 These files are created in the plugin's _Current directory_.
